@@ -1,17 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./components/app/";
+//import reportWebVitals from "./reportWebVitals";
+
+import {Provider} from 'react-redux';
+import {BrowserRouter  as Router} from 'react-router-dom';
+import ErrorBoundry from './components/error-boundry';
+import ContactsService from './service/concacts-service';
+import ContactsServiceContext from './components/contacts-service-context'
+import store from './store';
+import 'bootstrap/dist/css/bootstrap.css'; 
+
+
+const contactsService = new ContactsService;
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+	<Provider store={store}>
+<ErrorBoundry>
+	<ContactsServiceContext.Provider value={contactsService}>
+		<Router>
+		<App />
+		</Router>
+	</ContactsServiceContext.Provider>
+</ErrorBoundry>
+</Provider>
+,
+document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
